@@ -150,12 +150,12 @@
   function renderWeather(forecast, days) {
     const grid = $('#weather-grid');
     grid.innerHTML = '';
-    let usedFallback = false;
+    let liveCount = 0;
 
     forecast.forEach((entry, i) => {
       const day = days[i];
       const data = entry.data || { tMax: '–', tMin: '–', desc: 'no data', icon: '🌡️', source: 'none' };
-      if (data.source !== 'forecast') usedFallback = true;
+      if (data.source === 'forecast') liveCount++;
 
       const card = el('div', { class: `weather-card${data.source === 'forecast' ? '' : ' is-fallback'}` });
       card.appendChild(el('div', { class: 'day-label' }, day.label));
@@ -169,9 +169,14 @@
       grid.appendChild(card);
     });
 
-    if (usedFallback) {
-      $('#weather-sub').textContent =
-        'Live forecast unavailable for some dates — falling back to climate averages. Add an OpenWeatherMap key in js/config.js for live data closer to the trip.';
+    const sub = $('#weather-sub');
+    const total = forecast.length;
+    if (liveCount === 0) {
+      sub.textContent = 'No live forecast available yet — showing climate averages. Once the GitHub Actions workflow runs and publishes weather.json, the cards switch to live data automatically.';
+    } else if (liveCount < total) {
+      sub.textContent = `Live forecast for ${liveCount} of ${total} days. Dates beyond the 5-day API window fall back to climate averages and switch to live as the trip approaches.`;
+    } else {
+      sub.textContent = `Live forecast for all ${total} days from OpenWeatherMap.`;
     }
   }
 
