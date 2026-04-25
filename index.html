@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Madrid 5-day trip planner — itinerary, attractions, restaurants and day trips for 28 April to 3 May 2026." />
+  <meta name="theme-color" content="#c8102e" />
+  <title>Madrid Trip — 28 April → 3 May 2026</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <header class="site-header">
+    <a href="#top" class="brand" aria-label="Madrid 2026 home">
+      <span class="brand-mark" aria-hidden="true">M</span>
+      <span class="brand-text">Madrid <span class="brand-year">2026</span></span>
+    </a>
+    <nav class="site-nav" aria-label="Primary">
+      <button class="nav-toggle" aria-expanded="false" aria-controls="primary-nav">
+        <span class="nav-toggle-bars" aria-hidden="true"></span>
+        <span class="visually-hidden">Toggle menu</span>
+      </button>
+      <ul id="primary-nav" class="nav-list">
+        <li><a href="#itinerary">Itinerary</a></li>
+        <li><a href="#attractions">Sights</a></li>
+        <li><a href="#rooftops">Rooftops</a></li>
+        <li><a href="#restaurants">Restaurants</a></li>
+        <li><a href="#day-trips">Day trips</a></li>
+        <li><a href="#practical">Practical</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="hero-inner">
+        <p class="eyebrow">5-day city trip</p>
+        <h1 id="hero-title">Madrid <span class="hero-accent">2026</span></h1>
+        <p class="hero-dates" id="hero-dates"></p>
+        <ul class="hero-meta" id="hero-meta" aria-label="Trip details"></ul>
+      </div>
+      <div class="hero-shape" aria-hidden="true"></div>
+    </section>
+
+    <section id="weather" class="section section--tight" aria-labelledby="weather-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="weather-title">Weather forecast</h2>
+          <p class="section-sub" id="weather-sub">Live data from OpenWeatherMap with climate-average fallback.</p>
+        </div>
+        <div id="weather-grid" class="weather-grid" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section id="itinerary" class="section" aria-labelledby="itinerary-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="itinerary-title">Day-by-day itinerary</h2>
+          <p class="section-sub">Tap any day to expand the timeline. Estimated daily spend covers all three travellers.</p>
+        </div>
+        <div id="itinerary-list" class="day-list"></div>
+      </div>
+    </section>
+
+    <section id="attractions" class="section section--alt" aria-labelledby="attractions-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="attractions-title">Sights & hidden gems</h2>
+          <p class="section-sub">Filter by type. Each card opens a map and a "View on Google Maps" link.</p>
+        </div>
+        <div class="filter-row" id="attraction-filters" role="group" aria-label="Filter attractions"></div>
+        <div id="attraction-grid" class="card-grid"></div>
+      </div>
+    </section>
+
+    <section id="rooftops" class="section" aria-labelledby="rooftops-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="rooftops-title">Top rooftop bars</h2>
+          <p class="section-sub">Sorted by entry fee, low → high. Sundowner ≈ 20:30 in late April.</p>
+        </div>
+        <div id="rooftop-grid" class="card-grid"></div>
+      </div>
+    </section>
+
+    <section id="restaurants" class="section section--alt" aria-labelledby="restaurants-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="restaurants-title">Restaurants</h2>
+          <p class="section-sub">Google rating ≥ 4.4 ★, 1,000+ reviews, €10-€30 pp (a couple of flagged splurges). Mapped to your itinerary.</p>
+        </div>
+        <div id="restaurant-grid" class="card-grid"></div>
+      </div>
+    </section>
+
+    <section id="day-trips" class="section" aria-labelledby="day-trips-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="day-trips-title">Day trips</h2>
+          <p class="section-sub">Toledo &amp; Valencia are mandatory; the others are evaluated below.</p>
+        </div>
+        <div id="day-trips-list" class="trip-list"></div>
+      </div>
+    </section>
+
+    <section id="practical" class="section section--alt" aria-labelledby="practical-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="practical-title">Practical info</h2>
+          <p class="section-sub">Holidays, transport, City Card analysis, packing.</p>
+        </div>
+        <div class="practical-grid" id="practical-grid"></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="modal-root" class="modal-root" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="modal-title"></div>
+
+  <footer class="site-footer">
+    <p>Madrid Trip Planner • Generated from a compass research artifact. Verify hours and prices on official sites before visiting.</p>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/weather.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

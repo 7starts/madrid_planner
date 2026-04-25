@@ -1,0 +1,55 @@
+name: Refresh weather
+
+on:
+  schedule:
+    # Every 6 hours: 00:00, 06:00, 12:00, 18:00 UTC (4 runs/day, well under OWM free quota)
+    - cron: '0 0,6,12,18 * * *'
+  workflow_dispatch:        # lets you trigger manually from the Actions tab
+  push:
+    branches: [develop]
+    paths:
+      - '.github/workflows/refresh-weather.yml'   # re-run when this workflow itself changes
+
+permissions:
+  contents: write           # required so the bot can commit weather.json back
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch OpenWeatherMap forecast
+        env:
+          OWM_KEY: ${{ secrets.OWM_KEY }}
+          LAT: '40.4168'
+          LON: '-3.7038'
+        run: |
+          set -euo pipefail
+          if [ -z "${OWM_KEY:-}" ]; then
+            echo "::error::OWM_KEY secret is not set. Add it under Settings → Secrets → Actions."
+            exit 1
+          fi
+          curl -sSf \
+            "https://api.openweathermap.org/data/2.5/forecast?lat=${LAT}&lon=${LON}&units=metric&appid=${OWM_KEY}" \
+            -o weather.json
+          # Sanity-check the response actually contains forecast data
+          if ! grep -q '"list"' weather.json; then
+            echo "::error::Response did not contain forecast list — check the key & quota."
+            cat weather.json
+            exit 1
+          fi
+          echo "Fetched $(jq '.list | length' weather.json) 3-hour entries."
+
+      - name: Commit if changed
+        run: |
+          set -euo pipefail
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add weather.json
+          if git diff --cached --quiet; then
+            echo "weather.json unchanged — nothing to commit."
+          else
+            git commit -m "Refresh weather forecast [skip ci]"
+            git push
+          fi
