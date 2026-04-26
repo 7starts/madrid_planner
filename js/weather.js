@@ -15,6 +15,17 @@
     '2026-05-03': { tMax: 22, tMin: 12, desc: 'sunny',        icon: '☀️' },
   };
 
+  /* Climate averages for day-trip cities on their respective trip dates.
+   * Keyed by city name; used when live OWM data is unavailable or outside forecast window. */
+  const CITY_CLIMATE = {
+    Toledo:               { tMax: 22, tMin: 9,  desc: 'mostly sunny', icon: '🌤️' },
+    Valencia:             { tMax: 23, tMin: 14, desc: 'sunny',         icon: '☀️' },
+    Segovia:              { tMax: 17, tMin: 5,  desc: 'partly sunny',  icon: '⛅' },
+    'El Escorial':        { tMax: 18, tMin: 7,  desc: 'partly sunny',  icon: '⛅' },
+    'Ávila':              { tMax: 15, tMin: 4,  desc: 'partly sunny',  icon: '⛅' },
+    'Alcalá de Henares':  { tMax: 20, tMin: 9,  desc: 'mostly sunny',  icon: '🌤️' },
+  };
+
   /* OWM weather-condition main → emoji. Centralised so tests / future changes are trivial. */
   const ICONS = {
     Clear: '☀️', Clouds: '☁️', Rain: '🌧️', Drizzle: '🌦️',
@@ -78,6 +89,40 @@
     return Object.assign({ source: 'climate' }, fallback);
   }
 
+  /* Fetch live OWM weather for each day-trip city on its assigned date.
+   * Only trips with a `date` field and `coords` get a live fetch attempt.
+   * All trips get at least a climate-average fallback. */
+  async function loadDayTripWeather(dayTrips, cfg) {
+    const result = {};
+
+    for (const trip of dayTrips) {
+      const fallback = Object.assign({ source: 'climate' }, CITY_CLIMATE[trip.name] || {});
+      result[trip.name] = fallback;
+
+      if (!trip.date || !trip.coords) continue;
+
+      const [lat, lon] = trip.coords;
+      try {
+        if (cfg.openWeatherMapKey) {
+          const url = `https://api.openweathermap.org/data/2.5/forecast`
+            + `?lat=${lat}&lon=${lon}`
+            + `&appid=${cfg.openWeatherMapKey}`
+            + `&units=${cfg.units || 'metric'}`;
+          const resp = await fetch(url);
+          if (resp.ok) {
+            const json = await resp.json();
+            const daily = aggregateForecast(json.list || []);
+            if (daily[trip.date]) result[trip.name] = daily[trip.date];
+          }
+        }
+      } catch (err) {
+        console.warn('[weather] day-trip forecast failed for', trip.name, err.message);
+      }
+    }
+
+    return result;
+  }
+
   async function loadForecast(dateStrings, cfg) {
     let live = {};
     try {
@@ -98,8 +143,10 @@
 
   window.Weather = {
     loadForecast,
+    loadDayTripWeather,
     getFallback,
     CLIMATE_AVERAGES,
+    CITY_CLIMATE,
     _internals: { aggregateForecast, dateKey },
   };
 })();

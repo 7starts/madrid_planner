@@ -250,7 +250,17 @@
     const card = el('article', { class: 'card', dataset: { category: item.category } });
 
     const media = el('div', { class: 'card-media' });
-    media.appendChild(el('span', { class: 'icon-fallback', 'aria-hidden': 'true' }, item.icon || '📍'));
+    if (item.image) {
+      const img = el('img', { class: 'card-img', src: item.image, alt: item.name, loading: 'lazy' });
+      img.addEventListener('error', () => {
+        img.classList.add('is-error');
+        const fb = el('span', { class: 'icon-fallback', 'aria-hidden': 'true' }, item.icon || '📍');
+        media.insertBefore(fb, img);
+      });
+      media.appendChild(img);
+    } else {
+      media.appendChild(el('span', { class: 'icon-fallback', 'aria-hidden': 'true' }, item.icon || '📍'));
+    }
     media.appendChild(el('span', { class: 'card-tag' }, item.category));
     card.appendChild(media);
 
@@ -371,7 +381,16 @@
     const card = el('article', { class: 'card' });
 
     const media = el('div', { class: 'card-media' });
-    media.appendChild(el('span', { class: 'icon-fallback', 'aria-hidden': 'true' }, '🍽️'));
+    if (r.image) {
+      const img = el('img', { class: 'card-img', src: r.image, alt: r.name, loading: 'lazy' });
+      img.addEventListener('error', () => {
+        img.classList.add('is-error');
+        media.insertBefore(el('span', { class: 'icon-fallback', 'aria-hidden': 'true' }, '🍽️'), img);
+      });
+      media.appendChild(img);
+    } else {
+      media.appendChild(el('span', { class: 'icon-fallback', 'aria-hidden': 'true' }, '🍽️'));
+    }
     media.appendChild(el('span', { class: 'card-tag' }, r.assignedDay));
     card.appendChild(media);
 
@@ -455,6 +474,14 @@
               : 'trip-card';
     const card = el('article', { class: cls });
 
+    if (trip.image) {
+      const media = el('div', { class: 'trip-card-media' });
+      const img = el('img', { class: 'trip-card-img', src: trip.image, alt: trip.name, loading: 'lazy' });
+      img.addEventListener('error', () => { media.style.display = 'none'; });
+      media.appendChild(img);
+      card.appendChild(media);
+    }
+
     const tagRow = el('div', { class: 'trip-tags' });
     if (trip.status === 'mandatory')         tagRow.appendChild(el('span', { class: 'badge' }, t().badgeMandatory));
     if (trip.status === 'optional-recommend') tagRow.appendChild(el('span', { class: 'badge badge--accent' }, t().badgeOptional));
@@ -463,6 +490,10 @@
 
     card.appendChild(el('h3', {}, trip.name));
     card.appendChild(tagRow);
+
+    /* Live weather badge — populated by updateDayTripWeather() after async fetch */
+    const weatherBadge = el('div', { class: 'trip-weather-badge', 'data-trip': trip.name });
+    card.appendChild(weatherBadge);
 
     const dl = el('dl', { class: 'trip-meta' });
     for (const [k, v] of [
@@ -494,6 +525,14 @@
       href: googleMapsUrl(trip.coords, trip.name),
       target: '_blank', rel: 'noopener noreferrer',
     }, t().btnOpenInGoogleMaps));
+    if (trip.bookingLinks && trip.bookingLinks.length) {
+      for (const bl of trip.bookingLinks) {
+        actions.appendChild(el('a', {
+          class: 'btn btn--ghost',
+          href: bl.href, target: '_blank', rel: 'noopener noreferrer',
+        }, bl.text));
+      }
+    }
     card.appendChild(actions);
 
     return card;
@@ -631,14 +670,42 @@
     initLangToggle();
     renderAll();
 
-    /* Fetch live weather in the background; re-render weather section when ready. */
+    const cfg = window.APP_CONFIG || {};
+
+    /* Fetch Madrid itinerary weather */
     const dateStrings = trip.days.map((d) => d.date);
     try {
-      const forecast = await window.Weather.loadForecast(dateStrings, window.APP_CONFIG || {});
+      const forecast = await window.Weather.loadForecast(dateStrings, cfg);
       cachedForecast = forecast;
       renderWeather(forecast, tripData().days);
     } catch (err) {
       console.warn('[weather] failed:', err);
+    }
+
+    /* Fetch day-trip city weather (runs in parallel but we await independently) */
+    try {
+      const tripWeather = await window.Weather.loadDayTripWeather(trip.dayTrips, cfg);
+      updateDayTripWeather(tripWeather);
+    } catch (err) {
+      console.warn('[weather] day-trip weather failed:', err);
+    }
+  }
+
+  function updateDayTripWeather(weatherMap) {
+    for (const [name, data] of Object.entries(weatherMap)) {
+      const badge = document.querySelector(`.trip-weather-badge[data-trip="${CSS.escape(name)}"]`);
+      if (!badge || !data || !data.icon) continue;
+      badge.innerHTML = '';
+      const icon  = el('span', { class: 'trip-w-icon', 'aria-hidden': 'true' }, data.icon);
+      const temps = el('span', { class: 'trip-w-temps' }, `${data.tMax}° / ${data.tMin}°`);
+      const desc  = el('span', { class: 'trip-w-desc muted small' }, data.desc);
+      const src   = data.source === 'forecast'
+        ? el('span', { class: 'trip-w-source' }, '🔴 live')
+        : el('span', { class: 'trip-w-source' }, 'avg');
+      badge.appendChild(icon);
+      badge.appendChild(temps);
+      badge.appendChild(desc);
+      badge.appendChild(src);
     }
   }
 

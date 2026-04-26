@@ -513,6 +513,21 @@ p  { margin: 0 0 1rem; }
   padding: 1.5rem;
   box-shadow: var(--c-shadow);
   display: flex; flex-direction: column; gap: 0.65rem;
+  overflow: hidden;
+}
+
+.trip-card-media {
+  width: calc(100% + 3rem);
+  margin: -1.5rem -1.5rem 0;
+  aspect-ratio: 16 / 7;
+  overflow: hidden;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  flex-shrink: 0;
+}
+.trip-card-img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
 }
 .trip-card.is-mandatory { border-color: rgba(200, 16, 46, 0.45); }
 .trip-card.is-skip { opacity: 0.85; background: linear-gradient(180deg, var(--c-surface), #f7f4ee); }
@@ -539,6 +554,23 @@ p  { margin: 0 0 1rem; }
   font-weight: 600;
 }
 .trip-card .trip-meta dd { margin: 0; font-weight: 500; }
+
+.trip-weather-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: rgba(29, 45, 80, 0.05);
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  flex-wrap: wrap;
+  min-height: 2.25rem;
+}
+.trip-weather-badge:empty { display: none; }
+.trip-w-icon { font-size: 1.5rem; line-height: 1; flex-shrink: 0; }
+.trip-w-temps { font-weight: 700; font-size: 1rem; }
+.trip-w-desc { color: var(--c-text-muted); font-size: 0.8rem; }
+.trip-w-source { margin-left: auto; font-size: 0.7rem; color: var(--c-text-muted); font-variant-numeric: tabular-nums; }
 
 /* ------ Practical info ------ */
 .practical-grid {

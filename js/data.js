@@ -16,7 +16,7 @@ const TRIP = {
     transport: 'Public only (Metro, EMT, Cercanías, AVE/Avant)',
     holidays: '1 May (Labour Day, national) • 2 May (Día de la Comunidad de Madrid)',
     weather: '12-22 °C, mostly sunny, occasional light rain',
-    budgetTotal: '€1,950-€2,100 (excl. flights & hotel)',
+    budgetTotal: '€1,895-€2,045 (excl. flights & hotel)',
   },
 
   /* Per-day itinerary slots */
@@ -36,38 +36,43 @@ const TRIP = {
     },
     {
       date: '2026-04-29', label: 'Day 2', dayName: 'Wednesday',
-      title: 'Old Madrid + Royal Palace',
-      tags: [{ text: 'Old Madrid', kind: 'neutral' }, { text: 'Royal Palace', kind: 'accent' }],
+      title: 'Old Madrid + Royal Palace + Templo de Debod',
+      tags: [{ text: 'Old Madrid', kind: 'neutral' }, { text: 'Royal Palace ✅', kind: 'accent' }],
+      note: '⚠ Royal Palace ticket purchased — 13:45 entry (€26/pp). Arrive at the preferential entrance by 13:30 (15 min before); present at the meeting point in the entrance hall by 13:40. Address: Calle Bailén s/n — south gate (Plaza de la Armería).',
       slots: [
-        { time: '09:30-10:00', activity: 'Hotel → metro to Ópera', directions: 'L4 → Goya → L2 → Ópera (~25 min — avoid 8-9:30 rush)' },
-        { time: '10:00-12:30', activity: 'Royal Palace + Royal Armoury (€18; ~2.5 h). Throne Room, Stradivarius collection, Royal Pharmacy. Pre-book online.', directions: '5 min walk from Ópera' },
-        { time: '12:30-13:00', activity: 'Almudena Cathedral (free; ~25 min)', directions: 'Adjacent to palace' },
-        { time: '13:00-14:30', activity: 'Lunch — Mercado de San Miguel (sample tapas) or Mesón del Champiñón nearby', directions: '8 min walk' },
-        { time: '14:30-15:30', activity: 'Plaza Mayor + Puerta del Sol (km zero, Tio Pepe sign, Bear & Strawberry Tree statue)', directions: 'All within 10 min walk' },
-        { time: '15:30-17:30', activity: 'Free time, coffee, shopping on Calle Mayor & Calle Arenal', directions: 'Walking' },
-        { time: '17:30-19:00', activity: 'Templo de Debod at sunset (free Egyptian temple — Madrid’s best free sunset spot)', directions: 'Sol → L3 → Plaza de España, 7 min walk' },
-        { time: '19:30-21:00', activity: 'Rooftop sundowner — Picalagartos Sky Bar (no entry fee)', directions: '10 min walk back to Gran Vía' },
+        { time: '09:30-10:00', activity: 'Hotel → metro to Sol', directions: 'L4 → Goya → L2 → Sol (~25 min)' },
+        { time: '10:00-10:45', activity: 'Puerta del Sol (km zero, Bear & Strawberry Tree) + Plaza Mayor — morning is quieter, best light for photos', directions: 'Sol metro exit; Plaza Mayor 5 min walk' },
+        { time: '10:45-12:30', activity: 'Mercado de San Miguel — brunch / early lunch (jamón ibérico, oysters, vermouth on tap). Arrive before 11:00 for best selection.', directions: '3 min walk from Plaza Mayor' },
+        { time: '12:30-13:15', activity: 'La Latina stroll — Calle Cava Baja, Plaza de la Paja, craft shops; leisurely walk toward the palace', directions: '10 min walk from market' },
+        { time: '13:30',       activity: '⚠ Arrive at Royal Palace preferential entrance (south gate, Plaza de la Armería). Enter now; reach meeting point in entrance hall by 13:40.', directions: 'Calle Bailén s/n — 8 min walk from La Latina' },
+        { time: '13:45-16:15', activity: 'Royal Palace + Royal Armoury (€26/pp; ~2.5 h) — Throne Room, Stradivarius collection, Royal Pharmacy', directions: '— ticket already purchased —' },
+        { time: '16:15-16:50', activity: 'Almudena Cathedral (free; ~35 min — neo-Gothic interior with colourful vaults; rooftop option €7)', directions: 'Adjacent to palace, 3 min walk' },
+        { time: '17:00-17:30', activity: 'Plaza de Oriente — royal gardens, equestrian statue of Philip IV, illuminated palace façade', directions: '5 min walk' },
+        { time: '17:30-19:30', activity: 'Templo de Debod (interior until 19:00; free outdoor sunset terrace until ~20:30)', directions: 'Walk ~20 min through Parque del Oeste, or L5 → Plaza de España + 7 min walk' },
+        { time: '19:30-21:00', activity: 'Rooftop sundowner — Picalagartos Sky Bar (no entry fee; walk-in bar area or reserve a table)', directions: '10 min walk to Gran Vía' },
         { time: '21:30',       activity: 'Dinner — La Barraca (legendary paella since 1935)', directions: '5 min walk' },
         { time: '23:30',       activity: 'Hotel', directions: 'Gran Vía → L5 → Diego de León → L4 → Avda. de América' },
       ],
-      dailySpend: '~€229',
+      dailySpend: '~€238',
     },
     {
       date: '2026-04-30', label: 'Day 3', dayName: 'Thursday',
-      title: 'Art Triangle + Bernabéu',
-      tags: [{ text: 'Museums', kind: 'neutral' }, { text: 'Stadium', kind: 'accent' }],
+      title: 'Bernabéu + Retiro + Madrid Barrios',
+      tags: [{ text: 'Stadium', kind: 'accent' }, { text: 'Parks & Barrios', kind: 'neutral' }],
       slots: [
-        { time: '09:45-10:00', activity: 'Hotel → Banco de España', directions: 'L4 → Goya → L2 → Banco de España (~25 min)' },
-        { time: '10:00-12:30', activity: 'Museo Nacional del Prado (€15; ~2.5 h). Velázquez Las Meninas, Goya Black Paintings, El Greco. Open Mon-Sat 10:00-20:00.', directions: '5 min walk from metro' },
-        { time: '12:30-14:00', activity: 'Walk through Retiro Park — Crystal Palace, Rose Garden, Estanque (boat rental ~€8)', directions: 'Direct from Prado, 5 min walk to Puerta de Felipe IV' },
-        { time: '14:00-15:30', activity: 'Lunch at Casa Mortero (Michelin-Bib; ~€35-40 pp at lunch — splurge)', directions: '12 min walk' },
-        { time: '15:30-17:30', activity: 'Museo Reina Sofía (€12; ~2 h). Picasso Guernica, Dalí, Miró. Closed Tuesdays.', directions: 'L2 → Sol → L1 → Atocha (or 12 min walk)' },
-        { time: '18:00',       activity: 'Metro to Bernabéu', directions: 'Atocha → L1 → Tribunal → L10 → Santiago Bernabéu (~30 min)' },
-        { time: '18:30-20:30', activity: 'Bernabéu Stadium Tour (€35 online — INCLUDES Real Madrid Museum, panoramic views, dressing rooms). Pre-book.', directions: '' },
-        { time: '21:00',       activity: 'Dinner — Casa Benigna (Chamartín paella institution; ~€30 pp)', directions: 'L10 → Cuzco; or 15 min walk' },
-        { time: '23:30',       activity: 'Hotel', directions: '10 min walk' },
+        { time: '08:45-09:15', activity: 'Hotel → Bernabéu', directions: 'L4 → Pío XII → L9 → Cuzco → L10 → Bernabéu (~20 min)' },
+        { time: '09:30-11:30', activity: 'Bernabéu Stadium Tour (€35 online — INCLUDES Museum, panoramic views, dressing rooms & dugouts; opens 09:30). Pre-book at realmadrid.com.', directions: '' },
+        { time: '11:30-12:15', activity: 'Metro to Retiro', directions: 'Bernabéu → L10 → Gregorio Marañón → L7 → Ibiza (~20 min)' },
+        { time: '12:15-13:30', activity: 'Retiro Park — Crystal Palace (free glass pavilion), Rosaleda Rose Garden, rowboat on the Estanque (~€8 per boat, 45 min)', directions: '5 min walk from Ibiza metro' },
+        { time: '13:30-14:00', activity: 'Walk to Casa Mortero', directions: '12 min walk (Calle Zorrilla 9, Las Cortes)' },
+        { time: '14:00-15:30', activity: "Lunch at Casa Mortero (Michelin-Bib; ~€35-40 pp — one of Madrid's best price-to-quality lunches)", directions: 'Las Cortes' },
+        { time: '15:30-17:00', activity: 'Barrio de Las Letras — Literary Quarter; Calle Huertas tiled street verses, Cervantes & Lope de Vega plaques, bookshops', directions: '5 min walk from restaurant' },
+        { time: '17:00-18:30', activity: 'Lavapiés neighbourhood — multicultural Madrid; street murals, Tabacalera cultural centre (free), local bodegas', directions: '10 min walk' },
+        { time: '18:30-19:30', activity: 'Metro back toward hotel; freshen up', directions: 'L5 → Sol → L2 → Goya → L4 → Avda. de América (~25 min)' },
+        { time: '20:30',       activity: 'Dinner — Casa Benigna (Chamartín paella institution; ~€30 pp). Walking distance from hotel.', directions: '8 min walk from hotel' },
+        { time: '23:00',       activity: 'Hotel', directions: '' },
       ],
-      dailySpend: '~€417',
+      dailySpend: '~€308',
     },
     {
       date: '2026-05-01', label: 'Day 4', dayName: 'Friday',
@@ -132,19 +137,21 @@ const TRIP = {
   attractions: [
     {
       id: 'royal-palace',
+      image: 'img/attractions/royal-palace.jpg',
       name: 'Royal Palace (Palacio Real)',
       category: 'palace', icon: '👑',
       address: 'Calle de Bailén s/n, 28071',
       hours: 'Apr-Sep: Mon-Sat 10:00-19:00, Sun 10:00-16:00. Closed 1 May.',
-      cost: '€18 (free Mon-Thu 18-20h, EU/Latin Am ID)',
+      cost: '€26/pp — ticket purchased (preferential entry Wed 29 Apr, 13:45). Arrive by 13:30.',
       duration: '2-2.5 h',
       metro: 'Ópera (L2/L5/R)',
       coords: [40.4179, -3.7141],
-      blurb: 'Largest royal palace in Western Europe by floor area. Throne Room, Royal Armoury, Stradivarius collection, Royal Pharmacy.',
+      blurb: 'Largest royal palace in Western Europe by floor area. Throne Room, Royal Armoury, Stradivarius collection, Royal Pharmacy. Enter via preferential entrance (south gate, Plaza de la Armería) — not the standard tourist queue.',
       link: 'https://tickets.patrimonionacional.es/en/tickets/palacio-real-de-madrid',
     },
     {
       id: 'bernabeu',
+      image: 'img/attractions/bernabeu.jpg',
       name: 'Santiago Bernabéu Stadium',
       category: 'stadium', icon: '⚽',
       address: 'Av. de Concha Espina 1, 28036',
@@ -158,6 +165,7 @@ const TRIP = {
     },
     {
       id: 'retiro',
+      image: 'img/attractions/retiro.jpg',
       name: 'Retiro Park',
       category: 'park', icon: '🌳',
       address: 'Plaza de la Independencia, 28001',
@@ -170,6 +178,7 @@ const TRIP = {
     },
     {
       id: 'gran-via',
+      image: 'img/attractions/gran-via.jpg',
       name: 'Gran Vía',
       category: 'street', icon: '🛣️',
       address: 'Gran Vía, 28013',
@@ -182,6 +191,7 @@ const TRIP = {
     },
     {
       id: 'plaza-mayor',
+      image: 'img/attractions/plaza-mayor.jpg',
       name: 'Plaza Mayor',
       category: 'plaza', icon: '🏛️',
       address: 'Plaza Mayor, 28012',
@@ -194,6 +204,7 @@ const TRIP = {
     },
     {
       id: 'puerta-sol',
+      image: 'img/attractions/puerta-sol.jpg',
       name: 'Puerta del Sol',
       category: 'plaza', icon: '🏛️',
       address: 'Puerta del Sol, 28013',
@@ -206,6 +217,7 @@ const TRIP = {
     },
     {
       id: 'prado',
+      image: 'img/attractions/prado.jpg',
       name: 'Museo Nacional del Prado',
       category: 'museum', icon: '🎨',
       address: 'C. de Ruiz de Alarcón 23, 28014',
@@ -219,6 +231,7 @@ const TRIP = {
     },
     {
       id: 'reina-sofia',
+      image: 'img/attractions/reina-sofia.jpg',
       name: 'Museo Reina Sofía',
       category: 'museum', icon: '🎨',
       address: 'C. de Sta. Isabel 52, 28012',
@@ -232,6 +245,7 @@ const TRIP = {
     },
     {
       id: 'templo-debod',
+      image: 'img/attractions/templo-debod.jpg',
       name: 'Templo de Debod',
       category: 'temple', icon: '🏺',
       address: 'C. de Ferraz 1, 28008',
@@ -244,6 +258,8 @@ const TRIP = {
     },
     {
       id: 'mercado-san-miguel',
+      image: 'img/attractions/mercado-san-miguel.jpg',
+      image: 'img/attractions/mercado-san-miguel.jpg',
       name: 'Mercado de San Miguel',
       category: 'market', icon: '🛒',
       address: 'Pl. de San Miguel s/n, 28005',
@@ -256,6 +272,7 @@ const TRIP = {
     },
     {
       id: 'rastro',
+      image: 'img/attractions/rastro.jpg',
       name: 'El Rastro Sunday Market',
       category: 'market', icon: '🛒',
       address: 'Calle Ribera de Curtidores, 28005',
@@ -268,6 +285,7 @@ const TRIP = {
     },
     {
       id: 'almudena',
+      image: 'img/attractions/almudena.jpg',
       name: 'Almudena Cathedral',
       category: 'church', icon: '⛪',
       address: 'C. de Bailén 10, 28013',
@@ -284,6 +302,7 @@ const TRIP = {
   rooftops: [
     {
       id: 'picalagartos',
+      image: 'img/attractions/gran-via.jpg',
       name: 'Picalagartos Sky Bar',
       category: 'rooftop', icon: '🍸',
       address: 'C. de Alcalá 4, 28014 (NH Collection Madrid Gran Vía, 8th-9th floor)',
@@ -296,6 +315,7 @@ const TRIP = {
     },
     {
       id: 'the-hat',
+      image: 'img/attractions/plaza-mayor.jpg',
       name: 'The Hat Rooftop',
       category: 'rooftop', icon: '🍸',
       address: 'C. Imperial 9, 28012 (behind Plaza Mayor)',
@@ -308,6 +328,7 @@ const TRIP = {
     },
     {
       id: 'ginkgo',
+      image: 'img/rooftops/jardines-sabatini.jpg',
       name: 'Ginkgo Sky Bar',
       category: 'rooftop', icon: '🍸',
       address: 'Pl. de España 5, 28008 (VP Plaza España Design, 12th fl.)',
@@ -320,6 +341,7 @@ const TRIP = {
     },
     {
       id: 'azotea-bellas-artes',
+      image: 'img/rooftops/circulo-bellas-artes.jpg',
       name: 'Azotea del Círculo de Bellas Artes',
       category: 'rooftop', icon: '🍸',
       address: 'C. de Alcalá 42, 28014',
@@ -332,6 +354,7 @@ const TRIP = {
     },
     {
       id: '360-rooftop',
+      image: 'img/rooftops/torre-madrid.jpg',
       name: '360° Rooftop Bar',
       category: 'rooftop', icon: '🍸',
       address: 'Pl. de España 8, 28008 (Riu Plaza España, 27th fl.)',
@@ -347,6 +370,7 @@ const TRIP = {
   /* Restaurants curated to the brief */
   restaurants: [
     {
+      image: 'img/restaurants/tortilla.jpg',
       name: 'La Castela',
       address: 'C. del Doctor Castelo 22, 28009 (Retiro)',
       coords: [40.4183, -3.6741],
@@ -358,6 +382,7 @@ const TRIP = {
       assignedDay: 'Day 1 dinner',
     },
     {
+      image: 'img/restaurants/paella.jpg',
       name: 'La Barraca',
       address: 'C. de la Reina 29, 28004 (Gran Vía)',
       coords: [40.4194, -3.6987],
@@ -369,6 +394,7 @@ const TRIP = {
       assignedDay: 'Day 2 dinner',
     },
     {
+      image: 'img/attractions/mercado-san-miguel.jpg',
       name: 'Mercado de San Miguel',
       address: 'Pl. de San Miguel s/n, 28005',
       coords: [40.4154, -3.7088],
@@ -414,6 +440,7 @@ const TRIP = {
       assignedDay: 'Day 4 late dinner',
     },
     {
+      image: 'img/restaurants/mercado-paz.jpg',
       name: 'Casa Dani',
       address: 'C. de Ayala 28, 28001 (Mercado de la Paz, Salamanca)',
       coords: [40.4254, -3.6822],
@@ -425,6 +452,7 @@ const TRIP = {
       assignedDay: 'Day 5 dinner',
     },
     {
+      image: 'img/restaurants/cava-baja.jpg',
       name: 'Taberna Tempranillo',
       address: 'C. Cava Baja 38, 28005 (La Latina)',
       coords: [40.4123, -3.7095],
@@ -441,8 +469,10 @@ const TRIP = {
   dayTrips: [
     {
       name: 'Toledo',
+      image: 'img/daytrips/toledo.jpg',
       status: 'mandatory',
       assignedDay: 'Sat 2 May',
+      date: '2026-05-02',
       coords: [39.8628, -4.0273],
       highlights: [
         'Toledo Cathedral (Catedral Primada) — Gothic masterpiece',
@@ -451,15 +481,20 @@ const TRIP = {
         'Alcázar of Toledo & Army Museum',
         'Mirador del Valle for skyline panorama; marzipan tasting',
       ],
-      transport: 'Renfe Avant Madrid Atocha → Toledo. €13.90 each way; 33 min. ~14 services/day weekdays, ~10 on weekends.',
+      transport: 'Renfe Avant Madrid Atocha → Toledo. €13.90 each way; 33 min. ~14 services/day weekdays, ~10 on weekends. Book at renfe.com.',
       cost: '~€70-€90 pp (train + monuments + lunch)',
       duration: 'Full day (8-10 h) recommended',
+      bookingLinks: [
+        { text: 'Book Renfe Avant', href: 'https://www.renfe.com' },
+      ],
       weather: 'Cobblestone, hilly, mostly outdoor — pack a light rain jacket.',
     },
     {
       name: 'Valencia',
+      image: 'img/daytrips/valencia.jpg',
       status: 'mandatory',
       assignedDay: 'Fri 1 May',
+      date: '2026-05-01',
       coords: [39.4699, -0.3763],
       highlights: [
         'Valencia Cathedral & Miguelete Tower (Holy Grail)',
@@ -468,14 +503,20 @@ const TRIP = {
         'Oceanogràfic or Hemisfèric IMAX',
         'Malvarrosa Beach + paella in its birthplace',
       ],
-      transport: 'AVE / Iryo / Avlo / Ouigo to Valencia Joaquín Sorolla. 1h 54 min direct; ~18 trains/day. Avlo from €29.',
+      transport: 'AVE / Iryo / Avlo / Ouigo to Valencia Joaquín Sorolla. 1h 54 min direct; ~18-23 trains/day. Book: Renfe AVE+Avlo → renfe.com | Iryo → iryo.eu/en | Ouigo → ouigo.com',
       cost: '€115-€180 pp (train + entries + lunch)',
       duration: 'Full day (~9 h on the ground)',
+      bookingLinks: [
+        { text: 'Renfe', href: 'https://www.renfe.com' },
+        { text: 'Iryo', href: 'https://iryo.eu/en' },
+        { text: 'Ouigo', href: 'https://www.ouigo.com' },
+      ],
       weather: 'Reliably warmer than Madrid (22-26 °C); excellent rain backup.',
       sameDayVerdict: 'Same-day return is the right fit for this 5-day Madrid-base trip.',
     },
     {
       name: 'Segovia',
+      image: 'img/daytrips/segovia.jpg',
       status: 'optional-recommend',
       assignedDay: 'Skip — save for return trip',
       coords: [40.9501, -4.1183],
@@ -483,10 +524,15 @@ const TRIP = {
       transport: 'AVE 27 min from Chamartín to Segovia-Guiomar; bus 11 to old town.',
       cost: '~€26 train',
       duration: 'Half-day or full-day',
+      weather: 'Higher altitude (1,000 m) — typically 3-4 °C cooler than Madrid. Light jacket needed even in late April.',
+      bookingLinks: [
+        { text: 'Book Renfe Avant', href: 'https://www.renfe.com' },
+      ],
       verdict: 'Strongly recommended if you had a 6th day. Could replace Toledo, but Toledo is closer & richer culturally.',
     },
     {
       name: 'El Escorial',
+      image: 'img/daytrips/el-escorial.jpg',
       status: 'optional-skip',
       assignedDay: 'Skip',
       coords: [40.5896, -4.1498],
@@ -494,10 +540,15 @@ const TRIP = {
       transport: 'Cercanías C-3 from Atocha or Chamartín, ~1 h. Covered by Tourist Pass Zone T.',
       cost: '~€8.40 round-trip with Zone T pass',
       duration: 'Half-day',
-      verdict: 'Doesn’t fit a packed 5-day Madrid-base unless you skip the Royal Palace.',
+      weather: 'Mountainside setting (~900 m) — 2-3 °C cooler than Madrid. Monastery grounds are mostly outdoor; bring a layer.',
+      bookingLinks: [
+        { text: 'Cercanías info', href: 'https://www.cercanias.renfe.com/web/madrid' },
+      ],
+      verdict: 'Doesn\'t fit a packed 5-day Madrid-base unless you skip the Royal Palace.',
     },
     {
       name: 'Ávila',
+      image: 'img/daytrips/avila.jpg',
       status: 'optional-skip',
       assignedDay: 'Skip',
       coords: [40.6566, -4.6815],
@@ -505,10 +556,15 @@ const TRIP = {
       transport: '~1.5 h each way',
       cost: 'Variable',
       duration: 'Full day',
+      weather: 'Highest provincial capital in Spain (1,130 m) — up to 6-8 °C cooler than Madrid. Warm layers essential even in late April.',
+      bookingLinks: [
+        { text: 'Book Renfe', href: 'https://www.renfe.com' },
+      ],
       verdict: 'Beautiful but too much travel for 5 days. Better paired with Segovia.',
     },
     {
       name: 'Alcalá de Henares',
+      image: 'img/daytrips/alcala.jpg',
       status: 'optional-recommend',
       assignedDay: 'Skip in this packed itinerary',
       coords: [40.4818, -3.3644],
@@ -516,6 +572,10 @@ const TRIP = {
       transport: 'Cercanías C-2 / C-7 from Chamartín ~40 min; covered by Zone T pass.',
       cost: '~€7 with Zone T pass',
       duration: 'Half-day',
+      weather: 'Same climate zone as Madrid — 18-22 °C in late April. No special preparation needed.',
+      bookingLinks: [
+        { text: 'Cercanías info', href: 'https://www.cercanias.renfe.com/web/madrid' },
+      ],
       verdict: 'Possible half-day option if a Madrid day frees up.',
     },
   ],
@@ -560,12 +620,13 @@ const TRIP = {
       ],
     },
     {
-      title: 'Pre-book ahead of time',
+      title: 'Booking status',
       list: [
-        'Royal Palace, Bernabéu Tour, Prado, Reina Sofía — timed entry.',
-        'AVE/Iryo to Valencia (book 3+ weeks ahead for &lt;€60 fares).',
-        'Avant to Toledo (Saturday services drop to ~10/day).',
-        'Casa Mortero, La Barraca, Casa Benigna — reserve 48 h ahead.',
+        '✅ Royal Palace — Wed 29 Apr, 13:45 — TICKET PURCHASED (€26/pp). Arrive preferential entrance by 13:30; meeting point in entrance hall by 13:40.',
+        'Bernabéu Tour — Thu 30 Apr, 09:30 slot → book now at realmadrid.com.',
+        'AVE/Iryo/Ouigo to Valencia (Fri 1 May) → renfe.com / iryo.eu / ouigo.com — book immediately; long-weekend fares rising fast.',
+        'Avant to Toledo (Sat 2 May, ~09:50 departure) → renfe.com — book now.',
+        'Restaurants: Casa Mortero, La Barraca, Casa Benigna — reserve at least 48 h ahead (long weekend).',
       ],
     },
     {
