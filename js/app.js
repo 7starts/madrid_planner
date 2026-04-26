@@ -1,10 +1,17 @@
-/* Main app — bootstrap, rendering, navigation, modal, maps. */
+/* Main app — bootstrap, rendering, navigation, modal, maps, i18n. */
 
 (function () {
   'use strict';
 
   const $  = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+
+  /* ------ i18n ------ */
+  let lang = localStorage.getItem('lang') || 'en';
+  let cachedForecast = null;
+
+  function t() { return window.I18N[lang] || window.I18N['en']; }
+  function tripData() { return lang === 'lt' && window.TRIP_LT ? window.TRIP_LT : window.TRIP; }
 
   /* ------ Helpers ------ */
   function el(tag, attrs = {}, ...children) {
@@ -24,8 +31,9 @@
     return node;
   }
 
-  function formatDate(iso, opts = { weekday: 'long', day: 'numeric', month: 'short' }) {
-    return new Date(iso + 'T12:00:00').toLocaleDateString('en-GB', opts);
+  function formatDate(iso, opts) {
+    const o = opts || { weekday: 'long', day: 'numeric', month: 'short' };
+    return new Date(iso + 'T12:00:00').toLocaleDateString(t().locale, o);
   }
 
   function escapeHtml(s) {
@@ -34,14 +42,12 @@
   }
 
   /* ------ Maps ------ */
-  /* OpenStreetMap embedded iframe — no API key required. */
   function osmEmbedUrl([lat, lon], zoom = 15) {
     const d = 0.005;
     const bbox = [lon - d, lat - d, lon + d, lat + d].join(',');
     return `https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${lat},${lon}`;
   }
 
-  /* Deep link to Google Maps directions — opens externally, no key required. */
   function googleMapsUrl([lat, lon], label) {
     const q = label ? `${lat},${lon}(${encodeURIComponent(label)})` : `${lat},${lon}`;
     return `https://www.google.com/maps/search/?api=1&query=${q}`;
@@ -77,7 +83,7 @@
     header.appendChild(el('h3', { id: 'modal-title' }, title));
     header.appendChild(el('button', {
       class: 'modal-close',
-      'aria-label': 'Close',
+      'aria-label': t().modalClose,
       onclick: closeModal,
     }, '×'));
     modal.appendChild(header);
@@ -100,7 +106,7 @@
       for (const l of links) {
         actions.appendChild(el('a', {
           class: l.primary ? 'btn' : 'btn btn--ghost',
-          href: l.href, target: '_blank', rel: 'noopener',
+          href: l.href, target: '_blank', rel: 'noopener noreferrer',
         }, l.text));
       }
       body.appendChild(actions);
@@ -135,12 +141,13 @@
       `${formatDate(meta.arrival.date)} → ${formatDate(meta.departure.date)}`;
 
     const items = [
-      ['Pace', meta.pace],
-      ['Public holidays', meta.holidays],
-      ['Expected weather', meta.weather],
-      ['Estimated total budget', meta.budgetTotal],
+      [t().heroPace,      meta.pace],
+      [t().heroHolidays,  meta.holidays],
+      [t().heroWeather,   meta.weather],
+      [t().heroBudget,    meta.budgetTotal],
     ];
     const ul = $('#hero-meta');
+    ul.innerHTML = '';
     for (const [label, value] of items) {
       ul.appendChild(el('li', {}, el('strong', {}, label), value));
     }
@@ -165,18 +172,20 @@
       temps.appendChild(el('span', { class: 'high' }, `${data.tMax}°`));
       temps.appendChild(el('span', { class: 'low' }, `${data.tMin}°`));
       card.appendChild(temps);
-      card.appendChild(el('div', { class: 'desc' }, data.desc));
+      const rawDesc = data.desc || '';
+      const desc = t().weatherDescs[rawDesc] || rawDesc;
+      card.appendChild(el('div', { class: 'desc' }, desc));
       grid.appendChild(card);
     });
 
     const sub = $('#weather-sub');
     const total = forecast.length;
     if (liveCount === 0) {
-      sub.textContent = 'No live forecast available yet — showing climate averages. Once the GitHub Actions workflow runs and publishes weather.json, the cards switch to live data automatically.';
+      sub.textContent = t().weatherNoLive;
     } else if (liveCount < total) {
-      sub.textContent = `Live forecast for ${liveCount} of ${total} days. Dates beyond the 5-day API window fall back to climate averages and switch to live as the trip approaches.`;
+      sub.textContent = t().weatherPartialLive(liveCount, total);
     } else {
-      sub.textContent = `Live forecast for all ${total} days from OpenWeatherMap.`;
+      sub.textContent = t().weatherAllLive(total);
     }
   }
 
@@ -228,7 +237,7 @@
       body.appendChild(ul);
 
       body.appendChild(el('div', { class: 'day-spend' },
-        el('strong', {}, 'Estimated daily spend (3 pax): '), day.dailySpend));
+        el('strong', {}, t().dailySpend), day.dailySpend));
 
       card.appendChild(header);
       card.appendChild(body);
@@ -251,11 +260,11 @@
 
     const dl = el('dl', { class: 'card-attrs' });
     const attrs = [
-      ['Hours', item.hours],
-      ['Cost', item.cost],
-      ['Visit', item.duration],
-      ['Metro', item.metro],
-      ['Best time', item.bestTime],
+      [t().attrHours,   item.hours],
+      [t().attrCost,    item.cost],
+      [t().attrVisit,   item.duration],
+      [t().attrMetro,   item.metro],
+      [t().attrBestTime,item.bestTime],
     ].filter(([, v]) => v);
     for (const [k, v] of attrs) {
       const wrap = el('div');
@@ -270,17 +279,17 @@
       class: 'btn',
       type: 'button',
       onclick: () => openItemModal(item),
-    }, 'View map'));
+    }, t().btnViewMap));
     actions.appendChild(el('a', {
       class: 'btn btn--ghost',
       href: googleMapsUrl(item.coords, item.name),
-      target: '_blank', rel: 'noopener',
-    }, 'Google Maps'));
+      target: '_blank', rel: 'noopener noreferrer',
+    }, t().btnGoogleMaps));
     if (item.link) {
       actions.appendChild(el('a', {
         class: 'btn btn--ghost',
-        href: item.link, target: '_blank', rel: 'noopener',
-      }, 'Official site'));
+        href: item.link, target: '_blank', rel: 'noopener noreferrer',
+      }, t().btnOfficialSite));
     }
     body.appendChild(actions);
 
@@ -294,8 +303,11 @@
     if (item.blurb) lines.push(`<p>${escapeHtml(item.blurb)}</p>`);
 
     const attrEntries = [
-      ['Hours', item.hours], ['Cost', item.cost], ['Visit', item.duration],
-      ['Metro', item.metro], ['Best time', item.bestTime],
+      [t().attrHours,    item.hours],
+      [t().attrCost,     item.cost],
+      [t().attrVisit,    item.duration],
+      [t().attrMetro,    item.metro],
+      [t().attrBestTime, item.bestTime],
     ].filter(([, v]) => v);
     if (attrEntries.length) {
       lines.push('<dl class="modal-attrs">');
@@ -306,16 +318,11 @@
     }
 
     const links = [
-      { text: 'Open in Google Maps', href: googleMapsUrl(item.coords, item.name), primary: true },
+      { text: t().btnOpenInGoogleMaps, href: googleMapsUrl(item.coords, item.name), primary: true },
     ];
-    if (item.link) links.push({ text: 'Official site', href: item.link });
+    if (item.link) links.push({ text: t().btnOfficialSite, href: item.link });
 
-    openModal({
-      title: item.name,
-      html: lines.join(''),
-      coords: item.coords,
-      links,
-    });
+    openModal({ title: item.name, html: lines.join(''), coords: item.coords, links });
   }
 
   function renderAttractions(items) {
@@ -331,7 +338,7 @@
     const all = el('button', {
       class: 'filter-btn', type: 'button',
       'aria-pressed': 'true', dataset: { category: 'all' },
-    }, 'All');
+    }, t().filterAll);
     row.appendChild(all);
     for (const cat of categories) {
       row.appendChild(el('button', {
@@ -375,15 +382,15 @@
     const rating = el('div', { class: 'rating' });
     rating.appendChild(el('span', { class: 'star', 'aria-hidden': 'true' }, '★'));
     rating.appendChild(document.createTextNode(`${r.rating.toFixed(1)} `));
-    rating.appendChild(el('span', { class: 'reviews' }, `(${r.reviews} reviews)`));
+    rating.appendChild(el('span', { class: 'reviews' }, `(${r.reviews} ${t().reviews})`));
     body.appendChild(rating);
 
     const dl = el('dl', { class: 'card-attrs' });
     for (const [k, v] of [
-      ['Price', r.pricePerPerson],
-      ['Best dish', r.bestDish],
-      ['Atmosphere', r.atmosphere],
-      ['Address', r.address],
+      [t().attrPrice,       r.pricePerPerson],
+      [t().attrBestDish,    r.bestDish],
+      [t().attrAtmosphere,  r.atmosphere],
+      [t().attrAddress,     r.address],
     ]) {
       const wrap = el('div');
       wrap.appendChild(el('dt', {}, k));
@@ -399,12 +406,12 @@
       class: 'btn',
       type: 'button',
       onclick: () => openRestaurantModal(r),
-    }, 'View map'));
+    }, t().btnViewMap));
     const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(r.name + ' Madrid')}`;
     actions.appendChild(el('a', {
       class: 'btn btn--ghost',
-      href: searchUrl, target: '_blank', rel: 'noopener',
-    }, 'Latest reviews'));
+      href: searchUrl, target: '_blank', rel: 'noopener noreferrer',
+    }, t().btnLatestReviews));
     body.appendChild(actions);
 
     card.appendChild(body);
@@ -414,12 +421,12 @@
   function openRestaurantModal(r) {
     const lines = [
       `<p class="muted small"><strong>${escapeHtml(r.address)}</strong></p>`,
-      `<p>${escapeHtml(r.cuisine)} · <strong>${r.rating.toFixed(1)} ★</strong> (${escapeHtml(r.reviews)} reviews)</p>`,
+      `<p>${escapeHtml(r.cuisine)} · <strong>${r.rating.toFixed(1)} ★</strong> (${escapeHtml(r.reviews)} ${escapeHtml(t().reviews)})</p>`,
       '<dl class="modal-attrs">',
-      `<div><dt>Price</dt><dd>${escapeHtml(r.pricePerPerson)}</dd></div>`,
-      `<div><dt>Best dish</dt><dd>${escapeHtml(r.bestDish)}</dd></div>`,
-      `<div><dt>Atmosphere</dt><dd>${escapeHtml(r.atmosphere)}</dd></div>`,
-      `<div><dt>Assigned</dt><dd>${escapeHtml(r.assignedDay)}</dd></div>`,
+      `<div><dt>${escapeHtml(t().attrPrice)}</dt><dd>${escapeHtml(r.pricePerPerson)}</dd></div>`,
+      `<div><dt>${escapeHtml(t().attrBestDish)}</dt><dd>${escapeHtml(r.bestDish)}</dd></div>`,
+      `<div><dt>${escapeHtml(t().attrAtmosphere)}</dt><dd>${escapeHtml(r.atmosphere)}</dd></div>`,
+      `<div><dt>${escapeHtml(t().attrAssigned)}</dt><dd>${escapeHtml(r.assignedDay)}</dd></div>`,
       '</dl>',
     ];
     if (r.note) lines.push(`<p class="muted small">${escapeHtml(r.note)}</p>`);
@@ -429,8 +436,8 @@
       html: lines.join(''),
       coords: r.coords,
       links: [
-        { text: 'Open in Google Maps', href: googleMapsUrl(r.coords, r.name), primary: true },
-        { text: 'Latest reviews on Google', href: `https://www.google.com/search?q=${encodeURIComponent(r.name + ' Madrid reviews')}` },
+        { text: t().btnOpenInGoogleMaps, href: googleMapsUrl(r.coords, r.name), primary: true },
+        { text: t().btnLatestReviewsOnGoogle, href: `https://www.google.com/search?q=${encodeURIComponent(r.name + ' Madrid reviews')}` },
       ],
     });
   }
@@ -442,27 +449,27 @@
   }
 
   /* ------ Day trips ------ */
-  function dayTripCard(t) {
-    const cls = t.status === 'mandatory' ? 'trip-card is-mandatory'
-              : t.status === 'optional-skip' ? 'trip-card is-skip'
+  function dayTripCard(trip) {
+    const cls = trip.status === 'mandatory' ? 'trip-card is-mandatory'
+              : trip.status === 'optional-skip' ? 'trip-card is-skip'
               : 'trip-card';
     const card = el('article', { class: cls });
 
     const tagRow = el('div', { class: 'trip-tags' });
-    if (t.status === 'mandatory') tagRow.appendChild(el('span', { class: 'badge' }, 'Mandatory'));
-    if (t.status === 'optional-recommend') tagRow.appendChild(el('span', { class: 'badge badge--accent' }, 'Optional'));
-    if (t.status === 'optional-skip') tagRow.appendChild(el('span', { class: 'badge badge--neutral' }, 'Skip'));
-    if (t.assignedDay) tagRow.appendChild(el('span', { class: 'badge badge--neutral' }, t.assignedDay));
+    if (trip.status === 'mandatory')         tagRow.appendChild(el('span', { class: 'badge' }, t().badgeMandatory));
+    if (trip.status === 'optional-recommend') tagRow.appendChild(el('span', { class: 'badge badge--accent' }, t().badgeOptional));
+    if (trip.status === 'optional-skip')     tagRow.appendChild(el('span', { class: 'badge badge--neutral' }, t().badgeSkip));
+    if (trip.assignedDay) tagRow.appendChild(el('span', { class: 'badge badge--neutral' }, trip.assignedDay));
 
-    card.appendChild(el('h3', {}, t.name));
+    card.appendChild(el('h3', {}, trip.name));
     card.appendChild(tagRow);
 
     const dl = el('dl', { class: 'trip-meta' });
     for (const [k, v] of [
-      ['Transport', t.transport],
-      ['Cost', t.cost],
-      ['Duration', t.duration],
-      ['Weather', t.weather],
+      [t().attrTransport, trip.transport],
+      [t().attrCost,      trip.cost],
+      [t().attrDuration,  trip.duration],
+      [t().attrWeather,   trip.weather],
     ]) {
       if (!v) continue;
       const wrap = el('div');
@@ -472,21 +479,21 @@
     }
     card.appendChild(dl);
 
-    if (t.highlights && t.highlights.length) {
-      card.appendChild(el('div', {}, el('strong', {}, 'Highlights')));
+    if (trip.highlights && trip.highlights.length) {
+      card.appendChild(el('div', {}, el('strong', {}, t().highlights)));
       const ul = el('ul');
-      for (const h of t.highlights) ul.appendChild(el('li', {}, h));
+      for (const h of trip.highlights) ul.appendChild(el('li', {}, h));
       card.appendChild(ul);
     }
-    if (t.verdict)         card.appendChild(el('p', { class: 'muted small' }, t.verdict));
-    if (t.sameDayVerdict)  card.appendChild(el('p', {}, el('strong', {}, t.sameDayVerdict)));
+    if (trip.verdict)        card.appendChild(el('p', { class: 'muted small' }, trip.verdict));
+    if (trip.sameDayVerdict) card.appendChild(el('p', {}, el('strong', {}, trip.sameDayVerdict)));
 
     const actions = el('div', { class: 'card-actions' });
     actions.appendChild(el('a', {
       class: 'btn',
-      href: googleMapsUrl(t.coords, t.name),
-      target: '_blank', rel: 'noopener',
-    }, 'Open in Google Maps'));
+      href: googleMapsUrl(trip.coords, trip.name),
+      target: '_blank', rel: 'noopener noreferrer',
+    }, t().btnOpenInGoogleMaps));
     card.appendChild(actions);
 
     return card;
@@ -495,10 +502,9 @@
   function renderDayTrips(items) {
     const list = $('#day-trips-list');
     list.innerHTML = '';
-    /* Mandatory first, then recommended optionals, then skip-recommended. */
     const order = { 'mandatory': 0, 'optional-recommend': 1, 'optional-skip': 2 };
     const sorted = [...items].sort((a, b) => order[a.status] - order[b.status]);
-    sorted.forEach((t) => list.appendChild(dayTripCard(t)));
+    sorted.forEach((trip) => list.appendChild(dayTripCard(trip)));
   }
 
   /* ------ Practical info ------ */
@@ -506,9 +512,7 @@
     const node = el('article', { class: 'practical-card' });
     node.appendChild(el('h3', {}, card.title));
     if (card.body) {
-      for (const para of card.body) {
-        node.appendChild(el('p', { html: para }));
-      }
+      for (const para of card.body) node.appendChild(el('p', { html: para }));
     }
     if (card.list) {
       const ul = el('ul');
@@ -527,15 +531,62 @@
     items.forEach((c) => grid.appendChild(practicalCard(c)));
   }
 
-  /* ------ Bootstrap ------ */
-  async function init() {
-    const trip = window.TRIP;
-    if (!trip) {
-      console.error('TRIP data missing — js/data.js failed to load.');
-      return;
-    }
+  /* ------ Static string update (non-dynamic DOM nodes) ------ */
+  function updateStaticStrings() {
+    document.documentElement.lang = lang;
 
-    setupNav();
+    const skip = $('.skip-link');
+    if (skip) skip.textContent = t().skipLink;
+
+    const brand = $('.brand');
+    if (brand) brand.setAttribute('aria-label', t().brandAriaLabel);
+
+    const nav = $('.site-nav');
+    if (nav) nav.setAttribute('aria-label', t().navAriaLabel);
+
+    const toggleVh = $('.nav-toggle .visually-hidden');
+    if (toggleVh) toggleVh.textContent = t().navToggle;
+
+    const navLinks = $$('#primary-nav a');
+    const navKeys = ['navItinerary', 'navSights', 'navRooftops', 'navRestaurants', 'navDayTrips', 'navPractical'];
+    navLinks.forEach((a, i) => { if (navKeys[i]) a.textContent = t()[navKeys[i]]; });
+
+    const eyebrow = $('.eyebrow');
+    if (eyebrow) eyebrow.textContent = t().eyebrow;
+
+    const sectionIds = ['itinerary', 'attractions', 'rooftops', 'restaurants', 'day-trips', 'practical'];
+    const titleKeys   = ['itineraryTitle', 'attractionsTitle', 'rooftopsTitle', 'restaurantsTitle', 'dayTripsTitle', 'practicalTitle'];
+    const subKeys     = ['itinerarySub',   'attractionsSub',   'rooftopsSub',   'restaurantsSub',   'dayTripsSub',   'practicalSub'];
+    sectionIds.forEach((id, i) => {
+      const titleEl = $(`#${id}-title`);
+      const subEl   = $(`#${id}-sub`);
+      if (titleEl) titleEl.textContent = t()[titleKeys[i]];
+      if (subEl)   subEl.textContent   = t()[subKeys[i]];
+    });
+
+    /* weather title only (subtitle is managed by renderWeather) */
+    const wTitle = $('#weather-title');
+    if (wTitle) wTitle.textContent = t().weatherTitle;
+
+    const heroMeta = $('#hero-meta');
+    if (heroMeta) heroMeta.setAttribute('aria-label', t().tripDetailsAria);
+
+    const filterGroup = $('#attraction-filters');
+    if (filterGroup) filterGroup.setAttribute('aria-label', t().filterAttractionsAria);
+
+    const footerP = $('.site-footer p');
+    if (footerP) footerP.textContent = t().footer;
+
+    const langBtn = $('#lang-toggle');
+    if (langBtn) {
+      langBtn.textContent = t().langToggle;
+      langBtn.setAttribute('aria-label', t().langToggleAria);
+    }
+  }
+
+  /* ------ Full re-render ------ */
+  function renderAll() {
+    const trip = tripData();
     renderHero(trip.meta);
     renderDays(trip.days);
     renderAttractionFilters(trip.attractions);
@@ -545,12 +596,47 @@
     renderDayTrips(trip.dayTrips);
     renderPractical(trip.practical);
 
-    /* Weather: skeleton cards first, then live data. */
+    const days = trip.days;
+    if (cachedForecast) {
+      renderWeather(cachedForecast, days);
+    } else {
+      renderWeather(days.map((d) => ({ date: d.date, data: null })), days);
+    }
+
+    updateStaticStrings();
+  }
+
+  /* ------ Language toggle ------ */
+  function initLangToggle() {
+    const btn = $('#lang-toggle');
+    if (!btn) return;
+    btn.textContent = t().langToggle;
+    btn.setAttribute('aria-label', t().langToggleAria);
+    btn.addEventListener('click', () => {
+      lang = lang === 'en' ? 'lt' : 'en';
+      localStorage.setItem('lang', lang);
+      renderAll();
+    });
+  }
+
+  /* ------ Bootstrap ------ */
+  async function init() {
+    const trip = window.TRIP;
+    if (!trip) {
+      console.error('TRIP data missing — js/data.js failed to load.');
+      return;
+    }
+
+    setupNav();
+    initLangToggle();
+    renderAll();
+
+    /* Fetch live weather in the background; re-render weather section when ready. */
     const dateStrings = trip.days.map((d) => d.date);
-    renderWeather(dateStrings.map((d) => ({ date: d, data: null })), trip.days);
     try {
       const forecast = await window.Weather.loadForecast(dateStrings, window.APP_CONFIG || {});
-      renderWeather(forecast, trip.days);
+      cachedForecast = forecast;
+      renderWeather(forecast, tripData().days);
     } catch (err) {
       console.warn('[weather] failed:', err);
     }
