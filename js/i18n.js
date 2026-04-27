@@ -13,6 +13,7 @@ window.I18N = {
     navRooftops: 'Rooftops',
     navRestaurants: 'Restaurants',
     navDayTrips: 'Day trips',
+    navMaps: 'Maps',
     navPractical: 'Practical',
     /* hero */
     eyebrow: '5-day city trip',
@@ -34,6 +35,8 @@ window.I18N = {
     restaurantsSub: 'Google rating ≥ 4.4 ★, 1,000+ reviews, €10-€30 pp (a couple of flagged splurges). Mapped to your itinerary.',
     dayTripsTitle: 'Day trips',
     dayTripsSub: 'Toledo & Valencia are mandatory; the others are evaluated below.',
+    mapsTitle: 'Maps & transport',
+    mapsSub: 'Official Madrid maps for metro, bus network and city orientation.',
     practicalTitle: 'Practical info',
     practicalSub: 'Holidays, transport, City Card analysis, packing.',
     /* filter */
@@ -95,6 +98,7 @@ window.I18N = {
     navRooftops: 'Stogo barai',
     navRestaurants: 'Restoranai',
     navDayTrips: 'Vienos dienos išvykos',
+    navMaps: 'Žemėlapiai',
     navPractical: 'Praktinė info',
     /* hero */
     eyebrow: '5 dienų miesto kelionė',
@@ -116,8 +120,10 @@ window.I18N = {
     restaurantsSub: '„Google“ įvertinimas ≥ 4,4 ★, 1 000+ atsiliepimų, €10–€30 asmeniui. Susieti su jūsų maršrutu.',
     dayTripsTitle: 'Vienos dienos išvykos',
     dayTripsSub: 'Toledo ir Valensija yra privalomos; kitos įvertintos žemiau.',
+    mapsTitle: 'Žemėlapiai ir transportas',
+    mapsSub: 'Oficialūs Madrido žemėlapiai: metro, autobusų tinklas ir miesto orientacija.',
     practicalTitle: 'Praktinė informacija',
-    practicalSub: 'Šventės, transportas, „City Card“ analizė, daiktų sąrašas.',
+    practicalSub: 'Šventės, transportas, „City Card” analizė, daiktų sąrašas.',
     /* filter */
     filterAll: 'Visi',
     filterAttractionsAria: 'Filtruoti lankytinas vietas',

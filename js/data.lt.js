@@ -137,6 +137,7 @@ window.TRIP_LT = {
   attractions: [
     {
       id: 'royal-palace',
+      image: 'img/attractions/royal-palace.jpg',
       name: 'Royal Palace (Palacio Real)',
       category: 'palace', icon: '👑',
       address: 'Calle de Bailén s/n, 28071',
@@ -150,6 +151,7 @@ window.TRIP_LT = {
     },
     {
       id: 'bernabeu',
+      image: 'img/attractions/bernabeu.jpg',
       name: 'Santiago Bernabéu Stadium',
       category: 'stadium', icon: '⚽',
       address: 'Av. de Concha Espina 1, 28036',
@@ -163,6 +165,7 @@ window.TRIP_LT = {
     },
     {
       id: 'retiro',
+      image: 'img/attractions/retiro.jpg',
       name: 'Retiro Park',
       category: 'park', icon: '🌳',
       address: 'Plaza de la Independencia, 28001',
@@ -175,6 +178,7 @@ window.TRIP_LT = {
     },
     {
       id: 'gran-via',
+      image: 'img/attractions/gran-via.jpg',
       name: 'Gran Vía',
       category: 'street', icon: '🛣️',
       address: 'Gran Vía, 28013',
@@ -187,6 +191,7 @@ window.TRIP_LT = {
     },
     {
       id: 'plaza-mayor',
+      image: 'img/attractions/plaza-mayor.jpg',
       name: 'Plaza Mayor',
       category: 'plaza', icon: '🏛️',
       address: 'Plaza Mayor, 28012',
@@ -199,6 +204,7 @@ window.TRIP_LT = {
     },
     {
       id: 'puerta-sol',
+      image: 'img/attractions/puerta-sol.jpg',
       name: 'Puerta del Sol',
       category: 'plaza', icon: '🏛️',
       address: 'Puerta del Sol, 28013',
@@ -211,6 +217,7 @@ window.TRIP_LT = {
     },
     {
       id: 'prado',
+      image: 'img/attractions/prado.jpg',
       name: 'Museo Nacional del Prado',
       category: 'museum', icon: '🎨',
       address: 'C. de Ruiz de Alarcón 23, 28014',
@@ -224,6 +231,7 @@ window.TRIP_LT = {
     },
     {
       id: 'reina-sofia',
+      image: 'img/attractions/reina-sofia.jpg',
       name: 'Museo Reina Sofía',
       category: 'museum', icon: '🎨',
       address: 'C. de Sta. Isabel 52, 28012',
@@ -237,6 +245,7 @@ window.TRIP_LT = {
     },
     {
       id: 'templo-debod',
+      image: 'img/attractions/templo-debod.jpg',
       name: 'Templo de Debod',
       category: 'temple', icon: '🏺',
       address: 'C. de Ferraz 1, 28008',
@@ -249,6 +258,7 @@ window.TRIP_LT = {
     },
     {
       id: 'mercado-san-miguel',
+      image: 'img/attractions/mercado-san-miguel.jpg',
       name: 'Mercado de San Miguel',
       category: 'market', icon: '🛒',
       address: 'Pl. de San Miguel s/n, 28005',
@@ -261,6 +271,7 @@ window.TRIP_LT = {
     },
     {
       id: 'rastro',
+      image: 'img/attractions/rastro.jpg',
       name: 'El Rastro Sunday Market',
       category: 'market', icon: '🛒',
       address: 'Calle Ribera de Curtidores, 28005',
@@ -273,6 +284,7 @@ window.TRIP_LT = {
     },
     {
       id: 'almudena',
+      image: 'img/attractions/almudena.jpg',
       name: 'Almudena Cathedral',
       category: 'church', icon: '⛪',
       address: 'C. de Bailén 10, 28013',
@@ -288,6 +300,7 @@ window.TRIP_LT = {
   rooftops: [
     {
       id: 'picalagartos',
+      image: 'img/attractions/gran-via.jpg',
       name: 'Picalagartos Sky Bar',
       category: 'rooftop', icon: '🍸',
       address: 'C. de Alcalá 4, 28014 (NH Collection Madrid Gran Vía, 8-9 aukštas)',
@@ -300,6 +313,7 @@ window.TRIP_LT = {
     },
     {
       id: 'the-hat',
+      image: 'img/attractions/plaza-mayor.jpg',
       name: 'The Hat Rooftop',
       category: 'rooftop', icon: '🍸',
       address: 'C. Imperial 9, 28012 (šalia Plaza Mayor)',
@@ -312,6 +326,7 @@ window.TRIP_LT = {
     },
     {
       id: 'ginkgo',
+      image: 'img/rooftops/jardines-sabatini.jpg',
       name: 'Ginkgo Sky Bar',
       category: 'rooftop', icon: '🍸',
       address: 'Pl. de España 5, 28008 (VP Plaza España Design, 12 aukštas)',
@@ -324,6 +339,7 @@ window.TRIP_LT = {
     },
     {
       id: 'azotea-bellas-artes',
+      image: 'img/rooftops/circulo-bellas-artes.jpg',
       name: 'Azotea del Círculo de Bellas Artes',
       category: 'rooftop', icon: '🍸',
       address: 'C. de Alcalá 42, 28014',
@@ -336,6 +352,7 @@ window.TRIP_LT = {
     },
     {
       id: '360-rooftop',
+      image: 'img/rooftops/torre-madrid.jpg',
       name: '360° Rooftop Bar',
       category: 'rooftop', icon: '🍸',
       address: 'Pl. de España 8, 28008 (Riu Plaza España, 27 aukštas)',
@@ -350,6 +367,7 @@ window.TRIP_LT = {
 
   restaurants: [
     {
+      image: 'img/restaurants/tortilla.jpg',
       name: 'La Castela',
       address: 'C. del Doctor Castelo 22, 28009 (Retiro)',
       coords: [40.4183, -3.6741],
@@ -361,6 +379,7 @@ window.TRIP_LT = {
       assignedDay: '1 dienos vakarienė',
     },
     {
+      image: 'img/restaurants/paella.jpg',
       name: 'La Barraca',
       address: 'C. de la Reina 29, 28004 (Gran Vía)',
       coords: [40.4194, -3.6987],
@@ -372,6 +391,7 @@ window.TRIP_LT = {
       assignedDay: '2 dienos vakarienė',
     },
     {
+      image: 'img/attractions/mercado-san-miguel.jpg',
       name: 'Mercado de San Miguel',
       address: 'Pl. de San Miguel s/n, 28005',
       coords: [40.4154, -3.7088],
@@ -383,6 +403,7 @@ window.TRIP_LT = {
       assignedDay: '2 dienos pietūs',
     },
     {
+      image: 'img/restaurants/torreznos.jpg',
       name: 'Casa Mortero',
       address: 'C. de Zorrilla 9, 28014 (Las Cortes)',
       coords: [40.4159, -3.6960],
@@ -394,6 +415,7 @@ window.TRIP_LT = {
       assignedDay: '3 dienos pietūs (prabangūs)',
     },
     {
+      image: 'img/restaurants/paella-marisco.jpg',
       name: 'Casa Benigna',
       address: 'C. Benigno Soto 9, 28002 (Chamartín)',
       coords: [40.4493, -3.6770],
@@ -406,6 +428,7 @@ window.TRIP_LT = {
       note: 'Pėsčiomis nuo viešbučio.',
     },
     {
+      image: 'img/restaurants/salmorejo.jpg',
       name: 'Bodega de la Ardosa',
       address: 'C. de Colón 13, 28004 (Malasaña)',
       coords: [40.4244, -3.7027],
@@ -417,6 +440,7 @@ window.TRIP_LT = {
       assignedDay: '4 dienos vėlyvoji vakarienė',
     },
     {
+      image: 'img/restaurants/mercado-paz.jpg',
       name: 'Casa Dani',
       address: 'C. de Ayala 28, 28001 (Mercado de la Paz, Salamanca)',
       coords: [40.4254, -3.6822],
@@ -428,6 +452,7 @@ window.TRIP_LT = {
       assignedDay: '5 dienos vakarienė',
     },
     {
+      image: 'img/restaurants/cava-baja.jpg',
       name: 'Taberna Tempranillo',
       address: 'C. Cava Baja 38, 28005 (La Latina)',
       coords: [40.4123, -3.7095],
@@ -443,6 +468,7 @@ window.TRIP_LT = {
   dayTrips: [
     {
       name: 'Toledo',
+      image: 'img/daytrips/toledo.jpg',
       status: 'mandatory',
       assignedDay: 'Šeštadienis, gegužės 2 d.',
       date: '2026-05-02',
@@ -464,6 +490,7 @@ window.TRIP_LT = {
     },
     {
       name: 'Valencia',
+      image: 'img/daytrips/valencia.jpg',
       status: 'mandatory',
       assignedDay: 'Penktadienis, gegužės 1 d.',
       date: '2026-05-01',
@@ -488,6 +515,7 @@ window.TRIP_LT = {
     },
     {
       name: 'Segovia',
+      image: 'img/daytrips/segovia.jpg',
       status: 'optional-recommend',
       assignedDay: 'Praleisti — pasilikti kitai kelionei',
       coords: [40.9501, -4.1183],
@@ -503,6 +531,7 @@ window.TRIP_LT = {
     },
     {
       name: 'El Escorial',
+      image: 'img/daytrips/el-escorial.jpg',
       status: 'optional-skip',
       assignedDay: 'Praleisti',
       coords: [40.5896, -4.1498],
@@ -518,6 +547,7 @@ window.TRIP_LT = {
     },
     {
       name: 'Ávila',
+      image: 'img/daytrips/avila.jpg',
       status: 'optional-skip',
       assignedDay: 'Praleisti',
       coords: [40.6566, -4.6815],
@@ -533,6 +563,7 @@ window.TRIP_LT = {
     },
     {
       name: 'Alcalá de Henares',
+      image: 'img/daytrips/alcala.jpg',
       status: 'optional-recommend',
       assignedDay: 'Praleisti šiame intensyviame maršrute',
       coords: [40.4818, -3.3644],
@@ -602,6 +633,28 @@ window.TRIP_LT = {
         'Turėkite ~€40 grynųjų kiekvienas — daugelis vietų priima korteles, tačiau mažų tapasų barai ir El Rastro pardavėjai teikia pirmenybę grynaisiais.',
         'Madrido vandentiekio vanduo puikus — papildykite butelį prie parkų šaltinių.',
         'Arbatpinigiai: suapvalinkite sąskaitą arba 5-10 % sėdimoje vakarienėje; tapasų baruose neprivaloma.',
+      ],
+    },
+  ],
+  maps: [
+    {
+      title: 'Metro',
+      list: [
+        '<a href="https://www.esmadrid.com/en/madrid-metro-map" target="_blank" rel="noopener">Interaktyvus metro žemėlapis</a>',
+        '<a href="https://www.esmadrid.com/en/madrid-metro-tourist-map-pdf" target="_blank" rel="noopener">Metro turistinis žemėlapis (PDF)</a>',
+      ],
+    },
+    {
+      title: 'Autobusai (EMT)',
+      list: [
+        '<a href="https://navegapormadrid.emtmadrid.es/app/" target="_blank" rel="noopener">Interaktyvus autobusų žemėlapis</a> — realiojo laiko tvarkaraščiai',
+        '<a href="http://www.esmadrid.com/en/madrid-bus-map" target="_blank" rel="noopener">Autobusų maršrutų žemėlapis</a>',
+      ],
+    },
+    {
+      title: 'Miesto žemėlapis',
+      list: [
+        '<a href="http://www.esmadrid.com/en/madrid-city-map" target="_blank" rel="noopener">Madrido miesto žemėlapis (esmadrid.com)</a>',
       ],
     },
   ],

@@ -406,6 +406,7 @@ const TRIP = {
       assignedDay: 'Day 2 lunch',
     },
     {
+      image: 'img/restaurants/torreznos.jpg',
       name: 'Casa Mortero',
       address: 'C. de Zorrilla 9, 28014 (Las Cortes)',
       coords: [40.4159, -3.6960],
@@ -417,6 +418,7 @@ const TRIP = {
       assignedDay: 'Day 3 lunch (splurge)',
     },
     {
+      image: 'img/restaurants/paella-marisco.jpg',
       name: 'Casa Benigna',
       address: 'C. Benigno Soto 9, 28002 (Chamartín)',
       coords: [40.4493, -3.6770],
@@ -429,6 +431,7 @@ const TRIP = {
       note: 'Walking distance from hotel.',
     },
     {
+      image: 'img/restaurants/salmorejo.jpg',
       name: 'Bodega de la Ardosa',
       address: 'C. de Colón 13, 28004 (Malasaña)',
       coords: [40.4244, -3.7027],
@@ -635,6 +638,28 @@ const TRIP = {
         'Carry ~€40 cash each — most places take cards but small tapas bars and El Rastro vendors prefer cash.',
         'Madrid tap water is excellent — refill at park fountains.',
         'Tipping: round up the bill or 5-10% at sit-down dinners; not expected at tapas bars.',
+      ],
+    },
+  ],
+  maps: [
+    {
+      title: 'Metro',
+      list: [
+        '<a href="https://www.esmadrid.com/en/madrid-metro-map" target="_blank" rel="noopener">Interactive metro map</a>',
+        '<a href="https://www.esmadrid.com/en/madrid-metro-tourist-map-pdf" target="_blank" rel="noopener">Metro tourist map (PDF)</a>',
+      ],
+    },
+    {
+      title: 'Bus (EMT)',
+      list: [
+        '<a href="https://navegapormadrid.emtmadrid.es/app/" target="_blank" rel="noopener">Live interactive bus map</a> — real-time arrivals',
+        '<a href="http://www.esmadrid.com/en/madrid-bus-map" target="_blank" rel="noopener">Bus route map (esmadrid.com)</a>',
+      ],
+    },
+    {
+      title: 'City map',
+      list: [
+        '<a href="http://www.esmadrid.com/en/madrid-city-map" target="_blank" rel="noopener">Madrid city map (esmadrid.com)</a>',
       ],
     },
   ],

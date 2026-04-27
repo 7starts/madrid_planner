@@ -570,6 +570,13 @@
     items.forEach((c) => grid.appendChild(practicalCard(c)));
   }
 
+  function renderMaps(items) {
+    const grid = $('#maps-grid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    (items || []).forEach((c) => grid.appendChild(practicalCard(c)));
+  }
+
   /* ------ Static string update (non-dynamic DOM nodes) ------ */
   function updateStaticStrings() {
     document.documentElement.lang = lang;
@@ -587,15 +594,15 @@
     if (toggleVh) toggleVh.textContent = t().navToggle;
 
     const navLinks = $$('#primary-nav a');
-    const navKeys = ['navItinerary', 'navSights', 'navRooftops', 'navRestaurants', 'navDayTrips', 'navPractical'];
+    const navKeys = ['navItinerary', 'navSights', 'navRooftops', 'navRestaurants', 'navDayTrips', 'navMaps', 'navPractical'];
     navLinks.forEach((a, i) => { if (navKeys[i]) a.textContent = t()[navKeys[i]]; });
 
     const eyebrow = $('.eyebrow');
     if (eyebrow) eyebrow.textContent = t().eyebrow;
 
-    const sectionIds = ['itinerary', 'attractions', 'rooftops', 'restaurants', 'day-trips', 'practical'];
-    const titleKeys   = ['itineraryTitle', 'attractionsTitle', 'rooftopsTitle', 'restaurantsTitle', 'dayTripsTitle', 'practicalTitle'];
-    const subKeys     = ['itinerarySub',   'attractionsSub',   'rooftopsSub',   'restaurantsSub',   'dayTripsSub',   'practicalSub'];
+    const sectionIds = ['itinerary', 'attractions', 'rooftops', 'restaurants', 'day-trips', 'maps', 'practical'];
+    const titleKeys   = ['itineraryTitle', 'attractionsTitle', 'rooftopsTitle', 'restaurantsTitle', 'dayTripsTitle', 'mapsTitle', 'practicalTitle'];
+    const subKeys     = ['itinerarySub',   'attractionsSub',   'rooftopsSub',   'restaurantsSub',   'dayTripsSub',   'mapsSub',   'practicalSub'];
     sectionIds.forEach((id, i) => {
       const titleEl = $(`#${id}-title`);
       const subEl   = $(`#${id}-sub`);
@@ -633,6 +640,7 @@
     renderRooftops(trip.rooftops);
     renderRestaurants(trip.restaurants);
     renderDayTrips(trip.dayTrips);
+    renderMaps(trip.maps);
     renderPractical(trip.practical);
 
     const days = trip.days;
