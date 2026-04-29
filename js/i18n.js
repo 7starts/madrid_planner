@@ -13,6 +13,7 @@ window.I18N = {
     navRooftops: 'Rooftops',
     navRestaurants: 'Restaurants',
     navDayTrips: 'Day trips',
+    navFood: 'Food & Drink',
     navMaps: 'Maps',
     navPractical: 'Practical',
     /* hero */
@@ -35,6 +36,8 @@ window.I18N = {
     restaurantsSub: 'Google rating ≥ 4.4 ★, 1,000+ reviews, €10-€30 pp (a couple of flagged splurges). Mapped to your itinerary.',
     dayTripsTitle: 'Day trips',
     dayTripsSub: 'Toledo & Valencia are mandatory; the others are evaluated below.',
+    foodTitle: 'Traditional Food & Drink',
+    foodSub: 'Madrid specialties are highlighted in red. Try them all before you leave.',
     mapsTitle: 'Maps & transport',
     mapsSub: 'Official Madrid maps for metro, bus network and city orientation.',
     practicalTitle: 'Practical info',
@@ -42,6 +45,11 @@ window.I18N = {
     /* filter */
     filterAll: 'All',
     filterAttractionsAria: 'Filter attractions',
+    filterFoodAria: 'Filter food and drink',
+    /* food badges */
+    badgeMadrid: 'Madrid specialty',
+    badgeSpain: 'Spanish classic',
+    badgeDrink: 'Drink',
     /* attribute labels */
     attrHours: 'Hours',
     attrCost: 'Cost',
@@ -49,6 +57,7 @@ window.I18N = {
     attrMetro: 'Metro',
     attrBestTime: 'Best time',
     attrPrice: 'Price',
+    attrWhereTry: 'Where to try',
     attrBestDish: 'Best dish',
     attrAtmosphere: 'Atmosphere',
     attrAddress: 'Address',
@@ -98,6 +107,7 @@ window.I18N = {
     navRooftops: 'Stogo barai',
     navRestaurants: 'Restoranai',
     navDayTrips: 'Vienos dienos išvykos',
+    navFood: 'Maistas ir gėrimai',
     navMaps: 'Žemėlapiai',
     navPractical: 'Praktinė info',
     /* hero */
@@ -120,6 +130,8 @@ window.I18N = {
     restaurantsSub: '„Google“ įvertinimas ≥ 4,4 ★, 1 000+ atsiliepimų, €10–€30 asmeniui. Susieti su jūsų maršrutu.',
     dayTripsTitle: 'Vienos dienos išvykos',
     dayTripsSub: 'Toledo ir Valensija yra privalomos; kitos įvertintos žemiau.',
+    foodTitle: 'Tradicinis maistas ir gėrimai',
+    foodSub: 'Madrido specialybės pažymėtos raudonai. Išbandykite viską prieš išvykdami.',
     mapsTitle: 'Žemėlapiai ir transportas',
     mapsSub: 'Oficialūs Madrido žemėlapiai: metro, autobusų tinklas ir miesto orientacija.',
     practicalTitle: 'Praktinė informacija',
@@ -127,6 +139,11 @@ window.I18N = {
     /* filter */
     filterAll: 'Visi',
     filterAttractionsAria: 'Filtruoti lankytinas vietas',
+    filterFoodAria: 'Filtruoti maistą ir gėrimus',
+    /* food badges */
+    badgeMadrid: 'Madrido specialybė',
+    badgeSpain: 'Ispaniškas klasikas',
+    badgeDrink: 'Gėrimas',
     /* attribute labels */
     attrHours: 'Darbo laikas',
     attrCost: 'Kaina',
@@ -134,6 +151,7 @@ window.I18N = {
     attrMetro: 'Metro',
     attrBestTime: 'Geriausias laikas',
     attrPrice: 'Kaina',
+    attrWhereTry: 'Kur ragauti',
     attrBestDish: 'Geriausias patiekalas',
     attrAtmosphere: 'Atmosfera',
     attrAddress: 'Adresas',

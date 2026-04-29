@@ -467,6 +467,70 @@
     items.forEach((r) => grid.appendChild(restaurantCard(r)));
   }
 
+  /* ------ Food & Drink ------ */
+  function foodCard(item) {
+    const card = el('article', { class: 'card food-card', dataset: { category: item.category } });
+    const media = el('div', { class: 'card-media' });
+    if (item.image) {
+      const img = el('img', { class: 'card-img', src: item.image, alt: item.name, loading: 'lazy' });
+      img.addEventListener('error', () => {
+        img.classList.add('is-error');
+        media.insertBefore(el('span', { class: 'icon-fallback', 'aria-hidden': 'true' }, item.icon || '\u{1f37d}'), img);
+      });
+      media.appendChild(img);
+    } else {
+      media.appendChild(el('span', { class: 'icon-fallback', 'aria-hidden': 'true' }, item.icon || '\u{1f37d}'));
+    }
+    const badgeClass = item.category === 'madrid' ? 'card-tag card-tag--madrid'
+                     : item.category === 'drink'  ? 'card-tag card-tag--drink'
+                     : 'card-tag card-tag--spain';
+    const badgeLabel = item.category === 'madrid' ? t().badgeMadrid
+                     : item.category === 'drink'  ? t().badgeDrink
+                     : t().badgeSpain;
+    media.appendChild(el('span', { class: badgeClass }, badgeLabel));
+    card.appendChild(media);
+    const body = el('div', { class: 'card-body' });
+    body.appendChild(el('h3', { class: 'card-title' }, item.name));
+    if (item.blurb) body.appendChild(el('p', { class: 'card-meta' }, item.blurb));
+    const dl = el('dl', { class: 'card-attrs' });
+    for (const [k, v] of [[t().attrWhereTry, item.whereTry], [t().attrPrice, item.price]]) {
+      if (!v) continue;
+      const wrap = el('div');
+      wrap.appendChild(el('dt', {}, k));
+      wrap.appendChild(el('dd', {}, v));
+      dl.appendChild(wrap);
+    }
+    body.appendChild(dl);
+    card.appendChild(body);
+    return card;
+  }
+
+  function renderFoodFilters(items) {
+    const row = $('#food-filters');
+    if (!row) return;
+    row.innerHTML = '';
+    const all = el('button', { class: 'filter-btn', type: 'button', 'aria-pressed': 'true', dataset: { category: 'all' } }, t().filterAll);
+    row.appendChild(all);
+    for (const [cat, label] of [['madrid', t().badgeMadrid], ['spain', t().badgeSpain], ['drink', t().badgeDrink]]) {
+      row.appendChild(el('button', { class: 'filter-btn', type: 'button', 'aria-pressed': 'false', dataset: { category: cat } }, label));
+    }
+    row.addEventListener('click', (e) => {
+      const btn = e.target.closest('.filter-btn');
+      if (!btn) return;
+      $$('.filter-btn', row).forEach((b) => b.setAttribute('aria-pressed', 'false'));
+      btn.setAttribute('aria-pressed', 'true');
+      const cat = btn.dataset.category;
+      $$('#food-grid .card').forEach((card) => { card.style.display = cat === 'all' || card.dataset.category === cat ? '' : 'none'; });
+    });
+  }
+
+  function renderFood(items) {
+    const grid = $('#food-grid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    (items || []).forEach((item) => grid.appendChild(foodCard(item)));
+  }
+
   /* ------ Day trips ------ */
   function dayTripCard(trip) {
     const cls = trip.status === 'mandatory' ? 'trip-card is-mandatory'
@@ -594,15 +658,15 @@
     if (toggleVh) toggleVh.textContent = t().navToggle;
 
     const navLinks = $$('#primary-nav a');
-    const navKeys = ['navItinerary', 'navSights', 'navRooftops', 'navRestaurants', 'navDayTrips', 'navMaps', 'navPractical'];
+    const navKeys = ['navItinerary', 'navSights', 'navRooftops', 'navRestaurants', 'navFood', 'navDayTrips', 'navMaps', 'navPractical'];
     navLinks.forEach((a, i) => { if (navKeys[i]) a.textContent = t()[navKeys[i]]; });
 
     const eyebrow = $('.eyebrow');
     if (eyebrow) eyebrow.textContent = t().eyebrow;
 
-    const sectionIds = ['itinerary', 'attractions', 'rooftops', 'restaurants', 'day-trips', 'maps', 'practical'];
-    const titleKeys   = ['itineraryTitle', 'attractionsTitle', 'rooftopsTitle', 'restaurantsTitle', 'dayTripsTitle', 'mapsTitle', 'practicalTitle'];
-    const subKeys     = ['itinerarySub',   'attractionsSub',   'rooftopsSub',   'restaurantsSub',   'dayTripsSub',   'mapsSub',   'practicalSub'];
+    const sectionIds = ['itinerary', 'attractions', 'rooftops', 'restaurants', 'food', 'day-trips', 'maps', 'practical'];
+    const titleKeys  = ['itineraryTitle', 'attractionsTitle', 'rooftopsTitle', 'restaurantsTitle', 'foodTitle', 'dayTripsTitle', 'mapsTitle', 'practicalTitle'];
+    const subKeys    = ['itinerarySub',   'attractionsSub',   'rooftopsSub',   'restaurantsSub',   'foodSub',   'dayTripsSub',   'mapsSub',   'practicalSub'];
     sectionIds.forEach((id, i) => {
       const titleEl = $(`#${id}-title`);
       const subEl   = $(`#${id}-sub`);
@@ -619,6 +683,8 @@
 
     const filterGroup = $('#attraction-filters');
     if (filterGroup) filterGroup.setAttribute('aria-label', t().filterAttractionsAria);
+    const foodFilterGroup = $('#food-filters');
+    if (foodFilterGroup) foodFilterGroup.setAttribute('aria-label', t().filterFoodAria);
 
     const footerP = $('.site-footer p');
     if (footerP) footerP.textContent = t().footer;
@@ -639,6 +705,8 @@
     renderAttractions(trip.attractions);
     renderRooftops(trip.rooftops);
     renderRestaurants(trip.restaurants);
+    renderFoodFilters(trip.food);
+    renderFood(trip.food);
     renderDayTrips(trip.dayTrips);
     renderMaps(trip.maps);
     renderPractical(trip.practical);

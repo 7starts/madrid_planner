@@ -421,6 +421,10 @@ p  { margin: 0 0 1rem; }
   color: var(--c-text);
 }
 
+.card-tag--madrid { background: rgba(200, 16, 46, 0.92); color: #fff; }
+.card-tag--spain  { background: rgba(244, 180, 0, 0.92); color: #3d2e00; }
+.card-tag--drink  { background: rgba(29, 45, 80, 0.88);  color: #fff; }
+
 .card-body {
   padding: 1.15rem 1.25rem 1.25rem;
   display: flex; flex-direction: column; gap: 0.5rem;
